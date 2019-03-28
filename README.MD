@@ -1,5 +1,7 @@
 # OneList
 
+再次特别感谢ONelist的原创作者，我这里只是添加我需要的功能部分，此版本修改为python2
+
 ## Installation
 
 ```bash
