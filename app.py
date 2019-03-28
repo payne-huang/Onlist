@@ -22,7 +22,7 @@ def catch_all(path):
 
     if info.is_file:  # download
         if path.endswith("mp4") or path.endswith("mkv"):
-            return render_template('video.html', info=info, path=path_format(path).strip('/'))
+            return render_template('video5.html', info=info, path=path_format(path).strip('/'))
         return redirect(info.files[0]['download_url'])
 
     return render_template('list.html', info=info, path=path_format(path).strip('/'))
