@@ -2,8 +2,6 @@
 import json
 import pickle
 import hashlib
-import urllib2
-import urllib
 import requests
 
 from cache import Cache
