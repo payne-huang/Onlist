@@ -1,0 +1,6 @@
+Flask
+redis
+schedule
+gunicorn
+python-dateutil
+requests
