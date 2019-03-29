@@ -4,7 +4,7 @@ import os.path
 from process import od
 from config import config
 from utils import path_format
-from flask import Flask, abort, redirect, render_template, Blueprint
+from flask import Flask, abort, redirect, render_template, Blueprint, request
 
 bp = Blueprint('main', __name__, url_prefix=config.location_path)
 
@@ -18,6 +18,7 @@ def favicon():
 @bp.route('/', defaults={'path': '/'})
 @bp.route('/<path:path>')
 def catch_all(path):
+    print(request.url)
     info = od.list_items_with_cache(
         path_format(config.start_directory + '/' + path))
 
