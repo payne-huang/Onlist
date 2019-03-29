@@ -116,7 +116,7 @@ class OneDrive():
         with requests.Session() as s:
             txt = s.request(method, url, data=data, headers=headers).text.encode('utf-8')
             res = json.loads(txt.decode('utf-8'))
-
+            print(res)
         if 'error' in res:
             raise Exception(res['error']['message'])
         return res

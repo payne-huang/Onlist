@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 
 from process import od
 from config import config
@@ -20,9 +21,14 @@ def catch_all(path):
     info = od.list_items_with_cache(
         path_format(config.start_directory + '/' + path))
 
-    if info.is_file:  # download
-        if path.endswith("mp4") or path.endswith("mkv"):
+    if info.is_file:
+        file_extension = os.path.splitext(path)[1][1:]
+        if file_extension in ['webm', 'mkv', 'mp4']:
             return render_template('video5.html', info=info, path=path_format(path).strip('/'))
+        # if file_extension in ['avi', 'mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'asf', 'ts', 'flv']:
+        #     return render_template('video2.html', info=info, path=path_format(path).strip('/'))
+        if file_extension in ['ogg', 'mp3', 'wav', 'flac']:
+            return render_template('audio.html', info=info, path=path_format(path).strip('/'))
         return redirect(info.files[0]['download_url'])
 
     return render_template('list.html', info=info, path=path_format(path).strip('/'))
