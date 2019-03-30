@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>OneList</title>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="jquery.js"></script>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -137,6 +139,9 @@
             </a>
             <h3>{{ path or '/' }}</h3>
         </div>
+        <div id="audio_div">
+            <audio id="audio" src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>
+        </div>
         <div class="list-body-container">
             <table class="list-table">
                 <thead>
@@ -192,7 +197,7 @@
 </body>
 <script>
     const root = "{{ url_for('.catch_all') }}"
-
+    var check_val = []
     window.onload = function () {
         var checkall = document.getElementById("checkall");
         var tbody = document.getElementById("tbody");
@@ -207,17 +212,16 @@
     function play_audio() {
         var tbody = document.getElementById("tbody");
         var check = tbody.getElementsByTagName("input");
-        check_val = [];
         for (var i = 0; i < check.length; i++) {
             if (check[i].checked && check[i].value.match("\.flac")) {
                 check_val.push(check[i].value)
             }
         }
         if (check_val.length > 0 ){
-            url = "/audio1.html?data="+check_val
-            var xmlhttp = new XMLHttpRequest()
-            xmlhttp.open("GET",url,true);
-            xmlhttp.send(null)
+            {#url = "/audio1.html?data="+check_val#}
+            {#var xmlhttp = new XMLHttpRequest()#}
+            {#xmlhttp.open("GET",url,true);#}
+            {#xmlhttp.send(null)#}
         }
     }
 
