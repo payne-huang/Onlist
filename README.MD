@@ -7,8 +7,8 @@
 ```bash
 # apt install python-pip redis-server
 
-git clone https://github.com/0oVicero0/OneList.git
-cd OneList
+git clone https://github.com/payne-huang/Onlist.git
+cd Onlist
 
 pip install -r requirements.txt
 # Get auth_token --> Get refresh_token --> Setup config
