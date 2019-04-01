@@ -196,33 +196,30 @@
 </body>
 <script>
     const root = "{{ url_for('.catch_all') }}"
-    var check_val = []
     window.onload = function () {
         var checkall = document.getElementById("checkall");
         var tbody = document.getElementById("tbody");
         var check = tbody.getElementsByTagName("input");
         checkall.onclick = function() {
             for (var i = 0; i < check.length; i++) {
-                check[i].checked = this.checked;
+                check[i].checked = true;
             }
         }
     }
     
     function play_audio() {
+        var check_val = [];
         var tbody = document.getElementById("tbody");
         var check = tbody.getElementsByTagName("input");
-        var audio = document.getElementById("audio_div");
-        audio.innerHTML();
         for (var i = 0; i < check.length; i++) {
             if (check[i].checked && check[i].value.match("\.flac")) {
-                check_val.push(check[i].value)
+                check_val.push(check[i].value);
+                check[i].checked = false;
             }
         }
         if (check_val.length > 0 ){
-            {#url = "/audio1.html?data="+check_val#}
-            {#var xmlhttp = new XMLHttpRequest()#}
-            {#xmlhttp.open("GET",url,true);#}
-            {#xmlhttp.send(null)#}
+            var url = "/audio1.html?data="+check_val;
+            window.open(url);
         }
     }
 

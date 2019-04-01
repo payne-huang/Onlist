@@ -1,11 +1,42 @@
 <!DOCTYPE HTML>
 <html>
-    <body>
-        <div align="center">
-            <audio src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>
-        </div>
-    </body>
-    <script>
+<body>
+<div>
+    <div id="content"></div>
+    {% for v in info %}
+        <label id="{{ v }}">{{ v }}</label>
+    {% endfor %}
+</div>
+<div align="center">
+    <audio id="audio" src="" controls="controls" autoplay="autoplay"></audio>
+</div>
+</body>
+<script>
+    var xmlhttp;
+    window.onload = function () {
+        var files = document.getElementsByTagName('label');
+        for (var v in files) {
+            var url = path_format(files[v].getAttribute("id")) + "?type=1";
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = callback
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send(null)
+        }
+    }
 
-    </script>
+    function callback() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var txt = xmlhttp.responseText;
+            var audio = document.getElementById('audio')
+            audio.setAttribute('src', txt)
+        }
+    }
+
+    function path_format(path) {
+        while (path.includes('//')) {
+            path = path.replace('//', '/')
+        }
+        return '/' + path.replace(/^\/|\/$/g, '')
+    }
+</script>
 </html>

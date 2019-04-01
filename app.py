@@ -19,6 +19,9 @@ def favicon():
 @bp.route('/<path:path>')
 def catch_all(path):
     print(request.url)
+    if path.startswith("audio1.html"):
+        files = request.args["data"].split(",")
+        return render_template('audio1.html', info=files, path=path_format(path).strip('/'))
     info = od.list_items_with_cache(
         path_format(config.start_directory + '/' + path))
 
@@ -29,6 +32,8 @@ def catch_all(path):
         # if file_extension in ['avi', 'mpg', 'mpeg', 'rm', 'rmvb', 'mov', 'wmv', 'asf', 'ts', 'flv']:
         #     return render_template('video2.html', info=info, path=path_format(path).strip('/'))
         if file_extension in ['ogg', 'mp3', 'wav', 'flac']:
+            if request.args:
+                return info.files[0]['download_url']
             return render_template('audio.html', info=info, path=path_format(path).strip('/'))
         return redirect(info.files[0]['download_url'])
 
