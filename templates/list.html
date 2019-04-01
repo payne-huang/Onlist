@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8"/>
     <title>OneList</title>
-    <a href="http://jquery.com/">jQuery</a>
-    <script src="jquery.js"></script>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -139,9 +137,10 @@
             </a>
             <h3>{{ path or '/' }}</h3>
         </div>
-        <div id="audio_div">
-            <audio id="audio" src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>
-        </div>
+{#        <div id="audio_div">#}
+{#            <audio id="audio" src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>#}
+{#        </div>#}
+            <div id="audio_div"/>
         <div class="list-body-container">
             <table class="list-table">
                 <thead>
@@ -159,7 +158,7 @@
                     {% for v in info.folders[1:] %}
                         <tr>
                             <td>
-                                <input type="checkbox" name="key" value="{{ path }}/{{ v.name }}">
+{#                                <input type="checkbox" name="key" value="{{ path }}/{{ v.name }}">#}
                             </td>
                             <td class="file" jump-to="{{ path }}/{{ v.name }}">
                                 <ion-icon name="folder"></ion-icon>
@@ -212,6 +211,8 @@
     function play_audio() {
         var tbody = document.getElementById("tbody");
         var check = tbody.getElementsByTagName("input");
+        var audio = document.getElementById("audio_div");
+        audio.innerHTML();
         for (var i = 0; i < check.length; i++) {
             if (check[i].checked && check[i].value.match("\.flac")) {
                 check_val.push(check[i].value)
@@ -260,10 +261,10 @@
         e.addEventListener('click', function () {
             var file = this.getAttribute('jump-to');
             var temp = String(file);
-            if (temp.match("\.")){
-                open(path_format(root + this.getAttribute('jump-to')))
+            if (temp.match("\\\.")){
+                window.open(path_format(root + this.getAttribute('jump-to')))
             } else{
-                location.href = path_format(root + this.getAttribute('jump-to'))
+                window.location.href = path_format(root + this.getAttribute('jump-to'))
             }
         })
     })
