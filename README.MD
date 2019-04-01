@@ -13,7 +13,7 @@ cd Onlist
 pip install -r requirements.txt
 # Get auth_token --> Get refresh_token --> Setup config
 
-gunicorn app:app -b 127.0.0.1:5000 -D
+gunicorn app:app -b 127.0.0.1:5000 -D --limit-request-line 8188
 ```
 
 ## Configuration
