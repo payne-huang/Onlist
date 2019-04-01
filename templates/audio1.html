@@ -7,29 +7,49 @@
         <label id="{{ v }}">{{ v }}</label>
     {% endfor %}
 </div>
-<div align="center">
-    <audio id="audio" src="" controls="controls" autoplay="autoplay"></audio>
+<div id="audioBox" align="center">
+{#    <audio id="audio" src="" controls="controls" autoplay="autoplay"></audio>#}
 </div>
 </body>
 <script>
     var xmlhttp;
+    var files;
+    var audio;
     window.onload = function () {
-        var files = document.getElementsByTagName('label');
-        for (var v in files) {
-            var url = path_format(files[v].getAttribute("id")) + "?type=1";
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = callback
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send(null)
+        audio = new Audio();
+        audio.preload = true;
+        audio.controls = true;
+        audio.autoplay = true;
+        audio.loop = false;
+        audio.addEventListener('ended', playEndedHandler, false);
+        var contents = document.getElementsByTagName('label');
+        files = new Array(contents.length)
+        for (var i=0; i<contents.length; i++){
+            files.push(contents[i].getAttribute("id"))
         }
+
+        var file = files.pop()
+        call(file)
+    }
+    function call(file) {
+        var url = path_format(file) + "?type=1";
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = callback
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send(null)
     }
 
     function callback() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var txt = xmlhttp.responseText;
-            var audio = document.getElementById('audio')
-            audio.setAttribute('src', txt)
+            audio.src = xmlhttp.responseText;
         }
+        audio.play()
+        document.getElementById("audioBox").appendChild(audio);
+
+    }
+
+    function playEndedHandler() {
+        call(files.pop());
     }
 
     function path_format(path) {

@@ -18,7 +18,6 @@ def favicon():
 @bp.route('/', defaults={'path': '/'})
 @bp.route('/<path:path>')
 def catch_all(path):
-    print(request.url)
     if path.startswith("audio1.html"):
         files = request.args["data"].split(",")
         return render_template('audio1.html', info=files, path=path_format(path).strip('/'))
