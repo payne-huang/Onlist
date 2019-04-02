@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
 <html>
+    <meta charset="UTF-8"/>
+    <title>Onlist-play-video</title>
     <body>
+        <div id="name" align="center">
+            <a id="video">{{ info.files[0]['name'] }}</a>
+        </div>
         <div align="center" >
             <video src="{{info.files[0]['download_url']}}}" controls="controls" width="1000"></video>
         </div>

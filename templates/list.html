@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8"/>
-    <title>OneList</title>
+    <title>Onlist</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -137,16 +137,12 @@
             </a>
             <h3>{{ path or '/' }}</h3>
         </div>
-{#        <div id="audio_div">#}
-{#            <audio id="audio" src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>#}
-{#        </div>#}
-            <div id="audio_div"/>
         <div class="list-body-container">
             <table class="list-table">
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" id="checkall">
+                            <input type="checkbox" id="checkall" onclick="swap_check()">
                         </th>
                         <th class="file">文件</th>
                         <th class="updated_at">修改时间</th>
@@ -195,15 +191,23 @@
 </div>
 </body>
 <script>
-    const root = "{{ url_for('.catch_all') }}"
-    window.onload = function () {
-        var checkall = document.getElementById("checkall");
-        var tbody = document.getElementById("tbody");
-        var check = tbody.getElementsByTagName("input");
-        checkall.onclick = function() {
+    const root = "{{ url_for('.catch_all') }}";
+    var isCheckAll = false;
+    function swap_check() {
+        if (isCheckAll){
+            var tbody = document.getElementById("tbody");
+            var check = tbody.getElementsByTagName("input");
+            for (var i = 0; i < check.length; i++) {
+                check[i].checked = false;
+            }
+            isCheckAll = false;
+        } else {
+            var tbody = document.getElementById("tbody");
+            var check = tbody.getElementsByTagName("input");
             for (var i = 0; i < check.length; i++) {
                 check[i].checked = true;
             }
+            isCheckAll = true;
         }
     }
     
@@ -217,6 +221,7 @@
                 check[i].checked = false;
             }
         }
+        document.getElementById("checkall").checked = false;
         if (check_val.length > 0 ){
             var url = "/audio1.html?data="+check_val;
             window.open(url);
@@ -238,7 +243,7 @@
     }
 
     document.querySelectorAll('.list-header-container h3').forEach(function (e) {
-        var path = e.innerText.replace(/^\/|\/$/g, '')
+        var path = e.innerText.replace(/^\/|\/$/g, '');
         if (path.includes('/')) {
             e.innerHTML = ''
         } else {
@@ -247,12 +252,12 @@
 
         path = path.split('/')
         for (var i = 0; i < path.length; i++) {
-            var to = path.slice(0, i + 1).join('/')
+            var to = path.slice(0, i + 1).join('/');
             e.innerHTML += '<a jump-to="' + to + '">' + path[i] + '</a> / '
         }
 
         e.innerHTML = e.innerHTML.replace(/\s\/\s$/, '')
-    })
+    });
 
     document.querySelectorAll('[jump-to]').forEach(function (e) {
         e.addEventListener('click', function () {

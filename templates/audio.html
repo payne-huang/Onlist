@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
 <html>
+    <meta charset="UTF-8"/>
+    <title>Onlist-play-audio</title>
     <body>
+        <div id="name" align="center">
+            <a id="music">{{ info.files[0]['name'] }}</a>
+        </div>
         <div align="center">
             <audio src="{{info.files[0]['download_url']}}}" controls="controls" autoplay="autoplay"></audio>
         </div>

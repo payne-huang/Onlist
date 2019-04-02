@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <html>
+<meta charset="UTF-8"/>
+<title>Onlist-play-audio</title>
 <body>
 <div>
     <div id="content"></div>
@@ -8,7 +10,6 @@
     {% endfor %}
 </div>
 <div id="audioBox" align="center">
-{#    <audio id="audio" src="" controls="controls" autoplay="autoplay"></audio>#}
 </div>
 </body>
 <script>
@@ -23,18 +24,18 @@
         audio.loop = false;
         audio.addEventListener('ended', playEndedHandler, false);
         var contents = document.getElementsByTagName('label');
-        files = new Array(contents.length)
+        files = new Array(contents.length);
         for (var i=0; i<contents.length; i++){
             files.push(contents[i].getAttribute("id"))
         }
-
-        var file = files.pop()
+        files.reverse();
+        var file = files.pop();
         call(file)
     }
     function call(file) {
         var url = path_format(file) + "?type=1";
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = callback
+        xmlhttp.onreadystatechange = callback;
         xmlhttp.open("GET", url, true);
         xmlhttp.send(null)
     }
@@ -43,7 +44,7 @@
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             audio.src = xmlhttp.responseText;
         }
-        audio.play()
+        audio.play();
         document.getElementById("audioBox").appendChild(audio);
 
     }
