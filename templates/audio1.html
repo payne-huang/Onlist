@@ -10,7 +10,7 @@
 
     <div id="content"></div>
     {% for file in info["files"] %}
-        <label id="{{ file }}">{{ file }}</label>
+        <label id="{{ info["folder"]+"/"+file }}">{{ file }}</label>
     {% endfor %}
 </div>
 <div id="audioBox" align="center">
@@ -31,13 +31,14 @@
         var contents = document.getElementsByTagName('label');
         files = new Array(contents.length);
         for (var i=contents.length-1; i>=0; i--){
-            files.push(folder+"/"+contents[i].getAttribute("id"))
+            files.push(folder+"/"+contents[i].innerText)
         }
         var file = files.pop();
         call(file)
     };
 
     function call(file) {
+        document.getElementById(file).style.color= 'red';
         var url = path_format(file) + "?type=1";
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = callback;
