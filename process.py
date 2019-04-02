@@ -59,6 +59,7 @@ class Process:
 
                     cls.cache_all(new)
                     tasks += new.folders[1:]
+        print('refresh folders finish!')
 
     @staticmethod
     def cache_all(info):
