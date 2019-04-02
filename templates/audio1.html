@@ -1,18 +1,22 @@
 <!DOCTYPE HTML>
 <html>
+<head>
 <meta charset="UTF-8"/>
 <title>Onlist-play-audio</title>
+</head>
 <body>
 <div>
+    <div id="folder" align="center">{{ info["folder"] }}</div>
+
     <div id="content"></div>
-    {% for v in info %}
-        <label id="{{ v }}">{{ v }}</label>
+    {% for file in info["files"] %}
+        <label id="{{ file }}">{{ file }}</label>
     {% endfor %}
 </div>
 <div id="audioBox" align="center">
 </div>
 </body>
-<script>
+<script type="text/javascript">
     var xmlhttp;
     var files;
     var audio;
@@ -23,21 +27,22 @@
         audio.autoplay = true;
         audio.loop = false;
         audio.addEventListener('ended', playEndedHandler, false);
+        var folder = document.getElementById('folder').innerText;
         var contents = document.getElementsByTagName('label');
         files = new Array(contents.length);
-        for (var i=0; i<contents.length; i++){
-            files.push(contents[i].getAttribute("id"))
+        for (var i=contents.length-1; i>=0; i--){
+            files.push(folder+"/"+contents[i].getAttribute("id"))
         }
-        files.reverse();
         var file = files.pop();
         call(file)
-    }
+    };
+
     function call(file) {
         var url = path_format(file) + "?type=1";
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = callback;
         xmlhttp.open("GET", url, true);
-        xmlhttp.send(null)
+        xmlhttp.send(null);
     }
 
     function callback() {
@@ -46,7 +51,6 @@
         }
         audio.play();
         document.getElementById("audioBox").appendChild(audio);
-
     }
 
     function playEndedHandler() {
@@ -57,6 +61,7 @@
         while (path.includes('//')) {
             path = path.replace('//', '/')
         }
+
         return '/' + path.replace(/^\/|\/$/g, '')
     }
 </script>

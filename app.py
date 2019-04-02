@@ -20,7 +20,9 @@ def favicon():
 def catch_all(path):
     if path.startswith("audio1.html"):
         files = request.args["data"].split(",")
-        return render_template('audio1.html', info=files, path=path_format(path).strip('/'))
+        folder = request.args["folder"]
+        info = {'files': files, 'folder': folder}
+        return render_template('audio1.html', info=info, path=path_format(path).strip('/'))
     info = od.list_items_with_cache(
         path_format(config.start_directory + '/' + path))
 

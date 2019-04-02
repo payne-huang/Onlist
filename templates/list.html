@@ -137,6 +137,7 @@
             </a>
             <h3>{{ path or '/' }}</h3>
         </div>
+        <div id="folder" style="display: none">{{ path or '/' }}</div>
         <div class="list-body-container">
             <table class="list-table">
                 <thead>
@@ -217,13 +218,15 @@
         var check = tbody.getElementsByTagName("input");
         for (var i = 0; i < check.length; i++) {
             if (check[i].checked && check[i].value.match("\.flac")) {
-                check_val.push(check[i].value);
+                var cs = check[i].value.split("/");
+                check_val.push(cs[cs.length-1]);
                 check[i].checked = false;
             }
         }
         document.getElementById("checkall").checked = false;
+        var folder = document.getElementById("folder").innerText;
         if (check_val.length > 0 ){
-            var url = "/audio1.html?data="+check_val;
+            var url = "/audio1.html?data="+check_val+"&folder="+folder;
             window.open(url);
         }
     }
@@ -238,7 +241,6 @@
         while (path.includes('//')) {
             path = path.replace('//', '/')
         }
-
         return '/' + path.replace(/^\/|\/$/g, '')
     }
 
