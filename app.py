@@ -37,6 +37,8 @@ def catch_all(path):
                 return info.files[0]['download_url']
             return render_template('audio.html', info=info, path=path_format(path).strip('/'))
         return redirect(info.files[0]['download_url'])
+    if info.files.__len__() > 0:
+        info.files = sorted(info.files, key=lambda x: x["updated_at"], reverse=True)
 
     return render_template('list.html', info=info, path=path_format(path).strip('/'))
 
