@@ -20,6 +20,7 @@
     var xmlhttp;
     var files;
     var audio;
+    var file;
     window.onload = function () {
         audio = new Audio();
         audio.preload = true;
@@ -33,7 +34,7 @@
         for (var i=contents.length-1; i>=0; i--){
             files.push(folder+"/"+contents[i].innerText)
         }
-        var file = files.pop();
+        file = files.pop();
         call(file)
     };
 
@@ -48,14 +49,19 @@
 
     function callback() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            audio.src = xmlhttp.responseText;
+            try {
+                audio.src = xmlhttp.responseText;
+            } catch (e) {
+                call(file)
+            }
         }
         audio.play();
         document.getElementById("audioBox").appendChild(audio);
     }
 
     function playEndedHandler() {
-        call(files.pop());
+        file = files.pop();
+        call(file)
     }
 
     function path_format(path) {
