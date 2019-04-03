@@ -20,7 +20,6 @@
     var xmlhttp;
     var files;
     var audio;
-    var file;
     window.onload = function () {
         audio = new Audio();
         audio.preload = true;
@@ -34,7 +33,7 @@
         for (var i=contents.length-1; i>=0; i--){
             files.push(folder+"/"+contents[i].innerText)
         }
-        file = files.pop();
+        var file = files.pop();
         call(file)
     };
 
@@ -52,7 +51,7 @@
             try {
                 audio.src = xmlhttp.responseText;
             } catch (e) {
-                call(file)
+                {#call(file)#}
             }
         }
         audio.play();
@@ -60,8 +59,7 @@
     }
 
     function playEndedHandler() {
-        file = files.pop();
-        call(file)
+        call(files.pop())
     }
 
     function path_format(path) {
